@@ -1,0 +1,69 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+.pytest_cache/
+nosetests.xml
+coverage.xml
+.hypothesis/
+
+# Environments
+.conda/
+.env
+.venv/
+venv/
+ENV/
+env/
+
+# Editor / tool config
+.vscode/
+.claude/
+.spyderproject
+.ropeproject
+.python-version
+
+# Notebooks
+.ipynb_checkpoints
+
+# Internal notes
+prompts/
+
+# Simulation output / regenerable caches
+*.npz
+*.npy
+*.csv
+*.png
+!data/experimental/*.csv
+
+# Generated figures
+figures/*
+!figures/.gitkeep
