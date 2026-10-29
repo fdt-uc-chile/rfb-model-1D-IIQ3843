@@ -54,11 +54,13 @@ def build_atol(cell):
     atol_mem_node  = np.array([lambda_, potential],                               dtype=float)
     atol_anode     = np.array([gas_conc, gas_conc, saturation,
                                overpotential, gas_conc, gas_conc, saturation],    dtype=float)
+    atol_coupling  = np.array([conc], dtype=float)  # IIQ3843: c_H at the cathode/membrane face
     return np.concatenate([
         atol_tank,
         np.tile(atol_cath_node, Nc),
         np.tile(atol_mem_node,  Nm),
         atol_anode,
+        atol_coupling,
     ])
 
 

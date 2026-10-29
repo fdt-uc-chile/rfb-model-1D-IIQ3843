@@ -29,14 +29,17 @@ class submesh:
         self.S_right   = self.build_right_shift_matrix()
 
     def build_diffusion_operator(self):
-        """Returns the finite-volume diffusion flux divergence matrix (uniform mesh)."""
+        """Returns the finite-volume diffusion flux divergence matrix (uniform mesh).
+        Each row is (phi_{i+1}-phi_i)/dx_face - (phi_i-phi_{i-1})/dx_face, with
+        dx_face = 1/n_x the distance between neighbouring cell centres.
+        IIQ3843: the 1/dx_face factor was missing in rfbmodel-1D v1."""
         n_x = self.n_x # Number of grid points
         D1 = np.zeros((n_x, n_x))
         for i in range(1, n_x-1):
             D1[i, i-1] =  1
             D1[i, i  ] = -2
             D1[i, i+1] =  1
-        return D1
+        return D1 * n_x
 
     def build_diffusion_non_uniform_operator(self):
         """
@@ -46,10 +49,10 @@ class submesh:
         """
         n_x = self.n_x
         D1 = np.zeros((n_x, n_x))
-        dx = self.dx  # cell widths (n_x,)
-        dx_face = self.x_nodes  # node positions (n_x+1,)
-        # Compute face distances
-        dx_faces = dx_face[1:] - dx_face[:-1]  # (n_x,)
+        # Distances between neighbouring cell centres (n_x-1,). IIQ3843: rfbmodel-1D v1 used
+        # the cell widths here, while Cell.apply_electronic_*_BC use centre distances in the
+        # boundary rows; the mismatch broke charge conservation by about 1.5 % at 500 A/m2.
+        dx_faces = self.x_grid[1:] - self.x_grid[:-1]
         for i in range(1, n_x-1):
             dx_w = dx_faces[i-1]   # west face (between i-1 and i)
             dx_e = dx_faces[i]     # east face (between i and i+1)
