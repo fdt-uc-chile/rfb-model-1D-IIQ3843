@@ -63,6 +63,9 @@ prompts/
 *.csv
 *.png
 !data/experimental/*.csv
+# IIQ3843: figuras de la documentación y salidas de los tutoriales
+!docs/img/*.png
+resultados/
 
 # Generated figures
 figures/*
